@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiJass.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:MauiJass.Helpers"
+    BackgroundColor="DarkGreen">
+
+    <Grid ColumnDefinitions="*, 2*, 2*, 2*, *" RowDefinitions="*, 2*, 2*, 2*, *">
+        <Grid Grid.RowSpan="5" Grid.ColumnSpan="5">
+            <Image Aspect="AspectFill" Source="wood.jpg" />
+        </Grid>
+
+        <Frame
+            Grid.Row="1"
+            Grid.RowSpan="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Padding="0"
+            BackgroundColor="DarkGreen"
+            CornerRadius="20"
+            HasShadow="True">
+            <Grid Padding="10,5" RowDefinitions="2*, 3*">
+                <Image
+                    Margin="0,10,0,0"
+                    Aspect="AspectFit"
+                    Source="splash.png" />
+                <Image
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start">
+                    <Image.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="{x:Static icons:MDIconsHelper.CardsSpade}"
+                            Color="Black" />
+                    </Image.Source>
+                </Image>
+                <Image
+                    HeightRequest="50"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start">
+                    <Image.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="{x:Static icons:MDIconsHelper.Heart}"
+                            Color="Red" />
+                    </Image.Source>
+                </Image>
+                <Image
+                    Grid.Row="1"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    VerticalOptions="End">
+                    <Image.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="{x:Static icons:MDIconsHelper.CardsDiamond}"
+                            Color="Red" />
+                    </Image.Source>
+                </Image>
+                <Image
+                    Grid.Row="1"
+                    HeightRequest="50"
+                    HorizontalOptions="End"
+                    VerticalOptions="End">
+                    <Image.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="{x:Static icons:MDIconsHelper.CardsClub}"
+                            Color="Black" />
+                    </Image.Source>
+                </Image>
+
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    HorizontalOptions="Center"
+                    Spacing="1"
+                    VerticalOptions="Start">
+                    <Label
+                        Margin="0,0,0,0"
+                        FontFamily="Sitka"
+                        FontSize="Title"
+                        HorizontalTextAlignment="Center"
+                        Text="Bienvenue"
+                        TextColor="LightGreen"
+                        VerticalOptions="Start"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        FontFamily="Sitka"
+                        FontSize="Subtitle"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Errors}"
+                        TextColor="Red"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="Sitka"
+                        FontSize="Caption"
+                        HorizontalTextAlignment="Start"
+                        Text="Pseudo [longueur max: 10]"
+                        TextColor="LightGreen"
+                        VerticalTextAlignment="Center" />
+                    <Frame
+                        Padding="0"
+                        BackgroundColor="{DynamicResource GreenEntry}"
+                        BorderColor="{DynamicResource GreenEntry}"
+                        CornerRadius="2"
+                        WidthRequest="200">
+                        <Entry
+                            Margin="5,0"
+                            BackgroundColor="{DynamicResource GreenEntry}"
+                            FontFamily="Sitka"
+                            HorizontalTextAlignment="Start"
+                            Placeholder="Pseudo"
+                            PlaceholderColor="{DynamicResource GreenBG}"
+                            Text="{Binding Player.Name}"
+                            TextChanged="Entry_TextChanged" />
+                    </Frame>
+                    <Button
+                        Margin="0,20,0,0"
+                        BackgroundColor="LimeGreen"
+                        Command="{Binding LoginAsyncCommand}"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        FontFamily="Sitka"
+                        HorizontalOptions="End"
+                        Text="Jouer"
+                        TextColor="Black" />
+
+                </VerticalStackLayout>
+
+            </Grid>
+        </Frame>
+        <BoxView
+            Grid.Row="4"
+            Grid.ColumnSpan="5"
+            HeightRequest="20"
+            VerticalOptions="End"
+            Color="DarkGreen" />
+
+    </Grid>
+</ContentPage>

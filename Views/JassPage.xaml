@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiJass.JassPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:MauiJass.Converters"
+    xmlns:icons="clr-namespace:MauiJass.Helpers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Name="rootPage"
+    Title="Parties disponibles"
+    BackgroundColor="DarkGreen">
+
+    <ContentPage.Resources>
+        <conv:IsSeatTakenConverter x:Key="isSeatTaken" />
+        <conv:IsSeatFreeConverter x:Key="isSeatFree" />
+        <conv:SelectedRoomArgumentsConverter x:Key="selectedRoomArgumentsConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding OnAppearingCommand}" EventName="Appearing" />
+        <toolkit:EventToCommandBehavior Command="{Binding OnNavigatedToCommand}" EventName="NavigatedTo" />
+    </ContentPage.Behaviors>
+    <Grid
+        ColumnDefinitions="*, *"
+        ColumnSpacing="2"
+        RowDefinitions="*, *, auto">
+        <Image
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+            Aspect="AspectFill"
+            Rotation="0"
+            Source="wood.jpg" />
+
+        <CollectionView
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            Margin="0"
+            ItemsLayout="VerticalGrid, 2"
+            ItemsSource="{Binding Rooms}"
+            SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid IsVisible="{Binding SeatOpen}">
+                        <Frame
+                            Padding="0,2"
+                            Margin="5"
+                            BackgroundColor="DarkGreen"
+                            BorderColor="Black"
+                            CornerRadius="10"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center">
+                            <Grid
+                                Padding="0"
+                                ColumnDefinitions="*, *, *"
+                                RowDefinitions="*, *, *">
+                                    <Frame
+                                        Grid.RowSpan="3"
+                                        Grid.ColumnSpan="3"
+                                        Margin="15"
+                                        Padding="0"
+                                        BackgroundColor="DarkGreen"
+                                        BorderColor="Black"
+                                        CornerRadius="5">
+                                        <Grid>
+                                            <Frame Padding="0" IsClippedToBounds="True" BorderColor="Black">
+                                                <Image Aspect="AspectFill" Source="halfcarpet.png" />
+                                            </Frame>
+                                            
+                                            <Frame HorizontalOptions="Center"
+                                                VerticalOptions="Center" Padding="0" IsClippedToBounds="True" BorderColor="Black" BackgroundColor="#AA000000">
+
+                                            <Frame
+                                                Padding="15, 25"
+                                                BackgroundColor="#77006400"
+                                                BorderColor="DarkGreen"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontFamily="Sitka"
+                                                    FontSize="Small"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Rotation="-5"
+                                                    Text="Ouvert "
+                                                    TextColor="LightGray"
+                                                    VerticalOptions="CenterAndExpand" />
+                                            </Frame>
+                                            </Frame>
+                                            <Frame
+                                                Padding="15, 25"
+                                                BackgroundColor="#77006400"
+                                                BorderColor="DarkGreen"
+                                                HorizontalOptions="Center"
+                                                IsVisible="{Binding HasStarted}"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontFamily="Sitka"
+                                                    FontSize="Small"
+                                                    HorizontalOptions="Center"
+                                                    Rotation="-5"
+                                                    Text="Started"
+                                                    TextColor="LightGray"
+                                                    VerticalOptions="Center" />
+                                            </Frame>
+                                            <Image
+                                                Margin="0, 5"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="15"
+                                                HorizontalOptions="Start"
+                                                Rotation="0"
+                                                VerticalOptions="Start">
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        FontFamily="MaterialIcons"
+                                                        Glyph="{x:Static icons:MDIconsHelper.CardsSpade}"
+                                                        Color="Black" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Image
+                                                Margin="0, 5"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="15"
+                                                HorizontalOptions="End"
+                                                Rotation="0"
+                                                VerticalOptions="Start">
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        FontFamily="MaterialIcons"
+                                                        Glyph="{x:Static icons:MDIconsHelper.Heart}"
+                                                        Color="Red" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Image
+                                                Margin="0, 5"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="15"
+                                                HorizontalOptions="Start"
+                                                Rotation="0"
+                                                VerticalOptions="End">
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        FontFamily="MaterialIcons"
+                                                        Glyph="{x:Static icons:MDIconsHelper.CardsDiamond}"
+                                                        Color="Red" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Image
+                                                Margin="0, 5"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="15"
+                                                HorizontalOptions="End"
+                                                Rotation="0"
+                                                VerticalOptions="End">
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        FontFamily="MaterialIcons"
+                                                        Glyph="{x:Static icons:MDIconsHelper.CardsClub}"
+                                                        Color="Black" />
+                                                </Image.Source>
+                                            </Image>
+                                        </Grid>
+                                    </Frame>
+
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Margin="0,0,25,0"
+                                    FontAttributes="Bold"
+                                    FontFamily="Sitka"
+                                    FontSize="Caption"
+                                    HorizontalTextAlignment="End"
+                                    Text="{Binding Players.Count, StringFormat='{0}/4'}"
+                                    TextColor="White"
+                                    VerticalOptions="End" />
+                                <Image
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Margin="0,0,7,1"
+                                    BackgroundColor="Transparent"
+                                    HeightRequest="15"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="End"
+                                    WidthRequest="15">
+                                    <Image.Source>
+                                        <FontImageSource
+                                            FontFamily="MaterialIcons"
+                                            Glyph="{x:Static icons:MDIconsHelper.Account}"
+                                            Color="White" />
+                                    </Image.Source>
+                                </Image>
+
+                                <Frame
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Padding="10"
+                                    BackgroundColor="GreenYellow"
+                                    BorderColor="Black"
+                                    CornerRadius="25"
+                                    HeightRequest="50"
+                                    IsVisible="{Binding Players, Converter={StaticResource isSeatFree}, ConverterParameter='0'}"
+                                    WidthRequest="50">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.PickGameCommand, Source={x:Reference rootPage}}">
+                                            <TapGestureRecognizer.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource selectedRoomArgumentsConverter}">
+                                                    <MultiBinding.Bindings>
+                                                        <Binding Path="." />
+                                                        <Binding Path="ClassId" Source="{x:Reference seatOne}" />
+                                                    </MultiBinding.Bindings>
+                                                </MultiBinding>
+                                            </TapGestureRecognizer.CommandParameter>
+                                        </TapGestureRecognizer>
+                                    </Frame.GestureRecognizers>
+
+                                    <Image>
+                                        <Image.Source>
+                                            <FontImageSource
+                                                FontFamily="MaterialIcons"
+                                                Glyph="{x:Static icons:MDIconsHelper.ChairRolling}"
+                                                Color="LimeGreen" />
+                                        </Image.Source>
+                                    </Image>
+                                </Frame>
+                                <Frame
+                                    Grid.Row="1"
+                                    Padding="10"
+                                    BackgroundColor="LimeGreen"
+                                    BorderColor="Black"
+                                    CornerRadius="25"
+                                    HeightRequest="50"
+                                    IsVisible="{Binding Players, Converter={StaticResource isSeatFree}, ConverterParameter='1'}"
+                                    WidthRequest="50">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.PickGameCommand, Source={x:Reference rootPage}}">
+                                            <TapGestureRecognizer.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource selectedRoomArgumentsConverter}">
+                                                    <MultiBinding.Bindings>
+                                                        <Binding Path="." />
+                                                        <Binding Path="ClassId" Source="{x:Reference seatTwo}" />
+                                                    </MultiBinding.Bindings>
+                                                </MultiBinding>
+                                            </TapGestureRecognizer.CommandParameter>
+                                        </TapGestureRecognizer>
+                                    </Frame.GestureRecognizers>
+
+                                    <Image>
+                                        <Image.Source>
+                                            <FontImageSource
+                                                FontFamily="MaterialIcons"
+                                                Glyph="{x:Static icons:MDIconsHelper.ChairRolling}"
+                                                Color="GreenYellow" />
+                                        </Image.Source>
+                                    </Image>
+                                </Frame>
+                                <Frame
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Padding="10"
+                                    BackgroundColor="GreenYellow"
+                                    BorderColor="Black"
+                                    CornerRadius="25"
+                                    HeightRequest="50"
+                                    IsVisible="{Binding Players, Converter={StaticResource isSeatFree}, ConverterParameter='2'}"
+                                    WidthRequest="50">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.PickGameCommand, Source={x:Reference rootPage}}">
+                                            <TapGestureRecognizer.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource selectedRoomArgumentsConverter}">
+                                                    <MultiBinding.Bindings>
+                                                        <Binding Path="." />
+                                                        <Binding Path="ClassId" Source="{x:Reference seatThree}" />
+                                                    </MultiBinding.Bindings>
+                                                </MultiBinding>
+                                            </TapGestureRecognizer.CommandParameter>
+                                        </TapGestureRecognizer>
+                                    </Frame.GestureRecognizers>
+
+                                    <Image>
+                                        <Image.Source>
+                                            <FontImageSource
+                                                FontFamily="MaterialIcons"
+                                                Glyph="{x:Static icons:MDIconsHelper.ChairRolling}"
+                                                Color="LimeGreen" />
+                                        </Image.Source>
+                                    </Image>
+                                </Frame>
+                                <Frame
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Padding="10"
+                                    BackgroundColor="LimeGreen"
+                                    BorderColor="Black"
+                                    CornerRadius="25"
+                                    HeightRequest="50"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding Players, Converter={StaticResource isSeatFree}, ConverterParameter='3'}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="50">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.PickGameCommand, Source={x:Reference rootPage}}">
+                                            <TapGestureRecognizer.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource selectedRoomArgumentsConverter}">
+                                                    <MultiBinding.Bindings>
+                                                        <Binding Path="." />
+                                                        <Binding Path="ClassId" Source="{x:Reference seatFour}" />
+                                                    </MultiBinding.Bindings>
+                                                </MultiBinding>
+                                            </TapGestureRecognizer.CommandParameter>
+                                        </TapGestureRecognizer>
+                                    </Frame.GestureRecognizers>
+
+                                    <Image>
+                                        <Image.Source>
+                                            <FontImageSource
+                                                FontFamily="MaterialIcons"
+                                                Glyph="{x:Static icons:MDIconsHelper.ChairRolling}"
+                                                Color="GreenYellow" />
+                                        </Image.Source>
+                                    </Image>
+                                </Frame>
+
+                                <Frame
+                                    x:Name="seatOne"
+                                    Grid.Row="0"
+                                    Grid.ColumnSpan="3"
+                                    Padding="5"
+                                    BackgroundColor="Red"
+                                    BorderColor="Black"
+                                    ClassId="0"
+                                    CornerRadius="25"
+                                    HeightRequest="50"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding Players, Converter={StaticResource isSeatTaken}, ConverterParameter='0'}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="50">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Sitka"
+                                        FontSize="Large"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="R"
+                                        TextColor="Black"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Frame>
+                                <Frame
+                                    x:Name="seatTwo"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="0"
+                                    Padding="5"
+                                    BackgroundColor="Black"
+                                    BorderColor="Red"
+                                    ClassId="1"
+                                    CornerRadius="25"
+                                    HeightRequest="50"
+                                    IsVisible="{Binding Players, Converter={StaticResource isSeatTaken}, ConverterParameter='1'}"
+                                    Rotation="90"
+                                    VerticalOptions="Center"
+                                    WidthRequest="50">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Sitka"
+                                        FontSize="Large"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="R"
+                                        TextColor="Red"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Frame>
+                                <Frame
+                                    x:Name="seatThree"
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="3"
+                                    Padding="5"
+                                    BorderColor="Black"
+                                    BackgroundColor="Red"
+                                    ClassId="2"
+                                    CornerRadius="25"
+                                    HeightRequest="50"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding Players, Converter={StaticResource isSeatTaken}, ConverterParameter='2'}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="50">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Sitka"
+                                        FontSize="Large"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Rotation="0"
+                                        Text="R"
+                                        TextColor="Black"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Frame>
+                                <Frame
+                                    x:Name="seatFour"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="2"
+                                    Padding="5"
+                                    BorderColor="Red"
+                                    BackgroundColor="Black"
+                                    ClassId="3"
+                                    CornerRadius="25"
+                                    HeightRequest="50"
+                                    IsVisible="{Binding Players, Converter={StaticResource isSeatTaken}, ConverterParameter='3'}"
+                                    Rotation="270"
+                                    VerticalOptions="Center"
+                                    WidthRequest="50">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Sitka"
+                                        FontSize="Large"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="R"
+                                        TextColor="Red"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Frame>
+
+                            </Grid>
+                        </Frame>
+                    </Grid>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <BoxView
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
+            HeightRequest="20"
+            VerticalOptions="End"
+            Color="DarkGreen" />
+
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Margin="0,2,0,0"
+            Padding="2,5"
+            ColumnDefinitions="*, *">
+            <Frame
+                Grid.ColumnSpan="2"
+                Padding="0"
+                BackgroundColor="DarkGreen"
+                BorderColor="DarkGreen"
+                CornerRadius="5"
+                HeightRequest="40"
+                VerticalOptions="End">
+                <StackLayout>
+                    <Label
+                        FontSize="Caption"
+                        FontFamily="Sitka"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding AllPlayersCount, StringFormat='{0} joueur(s) en ligne'}"
+                        TextColor="White"
+                        VerticalOptions="EndAndExpand" />
+                    <Label
+                        FontSize="Caption"
+                        FontFamily="Sitka"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Rooms.Count, StringFormat='{0} partie(s)'}"
+                        TextColor="White"
+                        VerticalOptions="StartAndExpand" />
+
+                </StackLayout>
+
+            </Frame>
+            <Frame
+                x:Name="newGameFrame"
+                Grid.Column="1"
+                Margin="15,5,15,45"
+                Padding="1"
+                BackgroundColor="LimeGreen"
+                BorderColor="DarkGreen"
+                CornerRadius="30"
+                HeightRequest="60"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CreateGameAsyncCommand}" />
+                </Frame.GestureRecognizers>
+                <Grid>
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="Sitka"
+                        FontSize="Small"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Rotation="1"
+                        Text="Nouvelle partie"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>

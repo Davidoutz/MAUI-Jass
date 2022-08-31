@@ -1,0 +1,686 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiJass.GamePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:MauiJass.Converters"
+    xmlns:icons="clr-namespace:MauiJass.Helpers"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    Title="Partie en cours..."
+    BackgroundColor="DarkGreen">
+    <ContentPage.Resources>
+        <conv:AtoutToMDIConverter x:Key="atoutToMDIConverter" />
+        <conv:CurrentPlayerBackgroundConverter x:Key="currentPlayerBackgroundConverter" />
+        <conv:PlayerTeamToScoreColorConverter x:Key="playerTeamToScoreColorConverter" />
+        <conv:NotPlayerTeamToScoreNameConverter x:Key="notPlayerTeamToScoreNameConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Behaviors>
+        <!--<toolkit:EventToCommandBehavior Command="{Binding OnDisappearingCommand}" EventName="Disappearing" />
+        <toolkit:EventToCommandBehavior Command="{Binding OnNavigatedToCommand}" EventName="NavigatedTo" />
+        <toolkit:EventToCommandBehavior Command="{Binding OnNavigatedFromCommand}" EventName="NavigatedFrom" />-->
+    </ContentPage.Behaviors>
+    <Grid
+        x:Name="table"
+        ColumnDefinitions="*, *"
+        RowDefinitions="*, *, *, *">
+        <Grid
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="2">
+            <Image Aspect="AspectFill" Source="wood.jpg" />
+        </Grid>
+        <BoxView
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            HeightRequest="20"
+            VerticalOptions="End"
+            Color="DarkGreen" />
+
+            <Frame
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                Margin="10,5"
+                Padding="7"
+                BackgroundColor="DarkGreen"
+                BorderColor="Black"
+                CornerRadius="5">
+                <Grid>
+                    <!--BoxView Color="#AAFF0000" HeightRequest="1" VerticalOptions="Start" Margin="50, 20"/>
+                    <BoxView Color="#AAFF0000" HeightRequest="1" VerticalOptions="End" Margin="50, 20"/>
+                    <BoxView Color="#AA000000" WidthRequest="1" HorizontalOptions="Start" Margin="15, 50"/>
+                    <BoxView Color="#AA000000" WidthRequest="1" HorizontalOptions="End" Margin="15, 50"/>-->
+                    <Frame Padding="1" CornerRadius="5" BorderColor="Black" IsClippedToBounds="True">
+
+                        <Image Aspect="AspectFill" Source="carpetlight.jpg" />
+                    </Frame>
+                    <Frame
+                        HeightRequest="170"
+                        WidthRequest="200"
+                        Padding="2"
+                        BackgroundColor="#AA000000"
+                        BorderColor="Black"
+                        CornerRadius="5"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <Grid>
+                            <Frame
+                                Padding="0"
+                                BackgroundColor="#77006400"
+                                BorderColor="Transparent"
+                                CornerRadius="0" />
+                            <Label
+                                Margin="5,5,10,5"
+                                FontAttributes="Bold"
+                                FontFamily="Sitka"
+                                FontSize="Large"
+                                HorizontalOptions="Center"
+                                Rotation="-10"
+                                Text="Jass&#x0a;♠ simple"
+                                TextColor="LightGray"
+                                VerticalOptions="Center" />
+                        </Grid>
+
+                    </Frame>
+
+                    <Image
+                        Margin="10"
+                        BackgroundColor="Transparent"
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        Rotation="0"
+                        VerticalOptions="Start">
+                        <Image.Source>
+                            <FontImageSource
+                                FontFamily="MaterialIcons"
+                                Glyph="{x:Static icons:MDIconsHelper.CardsSpade}"
+                                Color="#CC000000" />
+                        </Image.Source>
+                    </Image>
+                    <Image
+                        Margin="10"
+                        BackgroundColor="Transparent"
+                        HeightRequest="40"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start">
+                        <Image.Source>
+                            <FontImageSource
+                                FontFamily="MaterialIcons"
+                                Glyph="{x:Static icons:MDIconsHelper.Heart}"
+                                Color="#CCFF0000" />
+                        </Image.Source>
+                    </Image>
+                    <Image
+                        Margin="10"
+                        BackgroundColor="Transparent"
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        VerticalOptions="End">
+                        <Image.Source>
+                            <FontImageSource
+                                FontFamily="MaterialIcons"
+                                Glyph="{x:Static icons:MDIconsHelper.CardsDiamond}"
+                                Color="#CCFF0000" />
+                        </Image.Source>
+                    </Image>
+                    <Image
+                        Margin="10"
+                        BackgroundColor="Transparent"
+                        HeightRequest="40"
+                        HorizontalOptions="End"
+                        VerticalOptions="End">
+                        <Image.Source>
+                            <FontImageSource
+                                FontFamily="MaterialIcons"
+                                Glyph="{x:Static icons:MDIconsHelper.CardsClub}"
+                                Color="#CC000000" />
+                        </Image.Source>
+                    </Image>
+
+                    <BoxView
+                        Margin="0, 0, 180,0"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding LeftShouldPlay}"
+                        VerticalOptions="Center"
+                        WidthRequest="1"
+                        Color="Wheat" />
+
+                    <Label
+                        Margin="0,0,160,0"
+                        FontAttributes="Bold"
+                        FontFamily="Sitka"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Rotation="90"
+                        Text="{Binding LeftPlayer.Name}"
+                        TextColor="LightGreen"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                    <BoxView
+                        Margin="0,0,0,150"
+                        HeightRequest="1"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding PartnerShouldPlay}"
+                        VerticalOptions="Center"
+                        WidthRequest="50"
+                        Color="WhiteSmoke" />
+                    <Label
+                        Margin="0,0,0,130"
+                        FontAttributes="Bold"
+                        FontFamily="Sitka"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding PartnerPlayer.Name}"
+                        TextColor="LightGreen"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+
+                    <BoxView
+                        Margin="180,0,0,0"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding RightShouldPlay}"
+                        VerticalOptions="Center"
+                        WidthRequest="1"
+                        Color="Wheat" />
+                    <Label
+                        Margin="160,0,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="Sitka"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Rotation="270"
+                        Text="{Binding RightPlayer.Name}"
+                        TextColor="LightGreen"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+
+                    <BoxView
+                        Margin="0,150,0,0"
+                        HeightRequest="1"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding PlayerShouldPlay}"
+                        VerticalOptions="Center"
+                        WidthRequest="50"
+                        Color="WhiteSmoke" />
+                    <Label
+                        Margin="0,130,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="Sitka"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Player.Name}"
+                        TextColor="LightGreen"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+            </Frame>
+       
+
+        <Grid
+            x:Name="mainTable"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="2"
+            ColumnDefinitions="*, *"
+            RowDefinitions="*, *, *, *" />
+
+        <Label
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,2"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            IsVisible="{Binding CanPlay}"
+            Text="A vous de jouer !"
+            TextColor="White"
+            VerticalTextAlignment="End" />
+        <Image
+            Grid.Row="3"
+            Margin="0,0,0,20"
+            HeightRequest="40"
+            HorizontalOptions="Start"
+            VerticalOptions="End">
+            <Image.Source>
+                <FontImageSource
+                    FontFamily="MaterialIcons"
+                    Glyph="{Binding AtoutGlyph}"
+                    Color="{Binding AtoutGlyphColor}" />
+            </Image.Source>
+        </Image>
+
+        <Grid
+            Grid.Row="1"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#99333333"
+            IsVisible="{Binding ShouldChoseSuit}"
+            ZIndex="1999">
+            <Label
+                Margin="0,0,0,220"
+                FontSize="Large"
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding CanPickAtout}"
+                Text="Atout ?"
+                TextColor="White"
+                VerticalTextAlignment="Center" />
+            <StackLayout
+                Margin="0,0,0,130"
+                HorizontalOptions="Center"
+                IsVisible="{Binding CanPickAtout}"
+                Orientation="Horizontal"
+                Spacing="20"
+                VerticalOptions="Center">
+                <ImageButton
+                    Command="{Binding PickAtoutCommand}"
+                    CommandParameter="heart"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="{x:Static icons:MDIconsHelper.Heart}"
+                            Color="Red" />
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton
+                    Command="{Binding PickAtoutCommand}"
+                    CommandParameter="spade"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="{x:Static icons:MDIconsHelper.CardsSpade}"
+                            Color="Black" />
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton
+                    Command="{Binding PickAtoutCommand}"
+                    CommandParameter="diamond"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="{x:Static icons:MDIconsHelper.CardsDiamond}"
+                            Color="Red" />
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton
+                    Command="{Binding PickAtoutCommand}"
+                    CommandParameter="club"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="{x:Static icons:MDIconsHelper.CardsClub}"
+                            Color="Black" />
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label
+                    IsVisible="{Binding CanChibre}"
+                    Text="OR"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+                <Button
+                    Command="{Binding ChibreCommand}"
+                    IsVisible="{Binding CanChibre}"
+                    Text="CHIBRE" />
+            </StackLayout>
+            <Label
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding WaitForPartner}"
+                Text="En attente du partenaire"
+                TextColor="White"
+                VerticalTextAlignment="Center" />
+        </Grid>
+
+
+
+
+        <Grid
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#1b4515"
+            ColumnSpacing="0"
+            ZIndex="1999">
+            <Grid ColumnDefinitions="*, *">
+                <Image
+                    Aspect="AspectFill"
+                    Rotation="0"
+                    Source="wood.jpg" />
+
+                <Image
+                    Margin="2"
+                    Aspect="Fill"
+                    Source="ardoise.png" />
+                <Grid Padding="20" ColumnDefinitions="*, 1,  *, 20">
+                    <Grid RowDefinitions="2*, *, *, *, *, 3*">
+                        <BoxView
+                            Grid.Row="0"
+                            HeightRequest="1"
+                            VerticalOptions="End"
+                            Color="White" />
+
+                        <Label
+                            FontFamily="EraserR"
+                            VerticalTextAlignment="Center"
+                            FontSize="Micro"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding TeamId, Converter={StaticResource notPlayerTeamToScoreNameConverter}, ConverterParameter='1'}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='1'}" />
+                        <Label
+                            Grid.Row="1"
+                            FontFamily="EraserR"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamOneScoreHundred}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='1'}"
+                            VerticalTextAlignment="Start" />
+                        <Label
+                            Grid.Row="2"
+                            FontFamily="EraserR"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamOneScoreFifty}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='1'}"
+                            VerticalTextAlignment="Start" />
+                        <Label
+                            Grid.Row="3"
+                            FontFamily="EraserR"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamOneScoreTwenty}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='1'}"
+                            VerticalTextAlignment="Start" />
+                        <Label
+                            Grid.Row="4"
+                            FontFamily="EraserR"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamOneScoreUnits}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='1'}"
+                            VerticalTextAlignment="End" />
+                        <Label
+                            Grid.Row="5"
+                            FontFamily="EraserR"
+                            FontSize="Micro"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamOneScore, StringFormat='{0} pts'}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='1'}"
+                            VerticalTextAlignment="End" />
+
+
+                    </Grid>
+                    <BoxView Grid.Column="1" Color="White" />
+                    <Grid
+                        Grid.Column="2"
+                        Margin="0"
+                        RowDefinitions="2*, *, *, *, *, 3*">
+                        <BoxView
+                            Grid.Row="0"
+                            HeightRequest="1"
+                            VerticalOptions="End"
+                            Color="White" />
+                        <Label
+                            FontFamily="EraserR"
+                            Margin="5,0"
+                            FontSize="Micro"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding TeamId, Converter={StaticResource notPlayerTeamToScoreNameConverter}, ConverterParameter='2'}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='2'}" />
+
+                        <Label
+                            Grid.Row="1"
+                            Margin="5,0"
+                            FontFamily="EraserR"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamTwoScoreHundred}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='2'}"
+                            VerticalTextAlignment="Start" />
+                        <Label
+                            Grid.Row="2"
+                            Margin="5,0"
+                            FontFamily="EraserR"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamTwoScoreFifty}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='2'}"
+                            VerticalTextAlignment="Start" />
+                        <Label
+                            Grid.Row="3"
+                            Margin="5,0"
+                            FontFamily="EraserR"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamTwoScoreTwenty}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='2'}"
+                            VerticalTextAlignment="Start" />
+                        <Label
+                            Grid.Row="4"
+                            Margin="5,0"
+                            FontFamily="EraserR"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamTwoScoreUnits}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='2'}"
+                            VerticalTextAlignment="Start" />
+                        <Label
+                            Grid.Row="5"
+                            Margin="5,0"
+                            FontFamily="EraserR"
+                            FontSize="Micro"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding TeamTwoScore, StringFormat='{0} pts'}"
+                            TextColor="{Binding TeamId, Converter={StaticResource playerTeamToScoreColorConverter}, ConverterParameter='2'}"
+                            VerticalTextAlignment="End" />
+                    </Grid>
+                    <!--<Label
+                        Grid.ColumnSpan="2"
+                        Margin="0,22,0,0"
+                        FontFamily="EraserD"
+                        FontSize="Medium"
+                        HorizontalTextAlignment="Center"
+                        Text="Scores"
+                        TextColor="WhiteSmoke" />-->
+
+
+
+                </Grid>
+                <Image
+                    Grid.Column="1"
+                    Aspect="AspectFill"
+                    Rotation="0"
+                    Source="wood.jpg" />
+
+                <Frame
+                    Grid.Column="1"
+                    Padding="2"
+                    BackgroundColor="#AADDDDDD"
+                    CornerRadius="0">
+                    <CollectionView
+                        x:Name="chatList"
+                        Margin="2"
+                        ItemsSource="{Binding ChatMessages}"
+                        VerticalScrollBarVisibility="Always">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="0" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal" Spacing="2">
+                                    <Label
+                                        BackgroundColor="Transparent"
+                                        FontAttributes="Bold"
+                                        FontFamily="Sitka"
+                                        Text="•"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        BackgroundColor="Transparent"
+                                        FontAttributes="Bold"
+                                        FontFamily="Sitka"
+                                        Text="{Binding Text}"
+                                        TextColor="{Binding Color}"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+            </Grid>
+        </Grid>
+
+        <Frame
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#AA333333"
+            CornerRadius="5"
+            IsVisible="{Binding NotReady}">
+            <Label
+                FontAttributes="Italic,Bold"
+                FontFamily="Sitka"
+                FontSize="Large"
+                HorizontalOptions="Center"
+                Text="En attente de joueurs . . ."
+                TextColor="White"
+                VerticalOptions="Center" />
+        </Frame>
+
+        <Frame
+            Grid.Row="1"
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#DF222222"
+            IsVisible="{Binding DidWin}"
+            ZIndex="2001">
+
+            <!--<Frame.IsVisible>
+                <OnPlatform x:TypeArguments="sys:Boolean">
+                    <On Platform="iOS" Value="false" />
+                    <On Platform="Android" Value="false" />
+                    <On Platform="UWP" Value="{Binding IsWinner}" />
+                </OnPlatform>
+            </Frame.IsVisible>-->
+
+            <Grid>
+                <!-- <Image
+                    Margin="2"
+                    Aspect="AspectFill"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"
+                    Source="happy_emoji.png" />-->
+                <Label
+                    Margin="60"
+                    FontAttributes="Bold"
+                    FontFamily="Chalk"
+                    FontSize="Title"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="BRAVO !"
+                    TextColor="LimeGreen"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+                <!--<Button
+                    Margin="40"
+                    HorizontalOptions="Start"
+                    Text="Rejouer"
+                    VerticalOptions="End" />-->
+                <Button
+                    Margin="60"
+                    BackgroundColor="DarkGreen"
+                    Command="{Binding QuitCommand}"
+                    HorizontalOptions="Center"
+                    Text="Retour aux parties"
+                    VerticalOptions="End" />
+            </Grid>
+        </Frame>
+
+        <Frame
+            Grid.Row="1"
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#DF222222"
+            IsVisible="{Binding DidLose}"
+            ZIndex="2001">
+
+            <!--<Frame.IsVisible>
+                <OnPlatform x:TypeArguments="sys:Boolean">
+                    <On Platform="iOS" Value="false" />
+                    <On Platform="Android" Value="false" />
+                    <On Platform="UWP" Value="{Binding IsLoser}" />
+                </OnPlatform>
+            </Frame.IsVisible>-->
+
+            <Grid>
+                <!--  <Image
+                    Margin="2"
+                    Aspect="AspectFill"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"
+                    Source="sad_emoji.png" />-->
+                <Label
+                    Margin="60"
+                    FontAttributes="Bold"
+                    FontFamily="Chalk"
+                    FontSize="Title"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="PERDU !"
+                    TextColor="OrangeRed"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+                <!--<Button
+                    Margin="40"
+                    HorizontalOptions="Start"
+                    Text="Rejouer"
+                    VerticalOptions="End" />-->
+                <Button
+                    Margin="60"
+                    BackgroundColor="DarkGreen"
+                    Command="{Binding QuitCommand}"
+                    HorizontalOptions="Center"
+                    Text="Retour aux parties"
+                    VerticalOptions="End" />
+            </Grid>
+        </Frame>
+        <Label
+            Grid.Row="1"
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+            BackgroundColor="{Binding EndGameBGColor}"
+            FontSize="Large"
+            HorizontalTextAlignment="Center"
+            Text="{Binding EndGameText}"
+            TextColor="{Binding EndGameColor}"
+            VerticalTextAlignment="Center"
+            ZIndex="2001">
+            <Label.IsVisible>
+                <OnPlatform x:TypeArguments="sys:Boolean">
+                    <On Platform="iOS" Value="false" />
+                    <On Platform="Android" Value="false" />
+                    <On Platform="UWP" Value="false" />
+                </OnPlatform>
+            </Label.IsVisible>
+        </Label>
+    </Grid>
+    <!--<StackLayout x:Name="stack" Orientation="Horizontal" Grid.Row="4"  Grid.ColumnSpan="2" Margin="10, 0">
+            <Label VerticalTextAlignment="Center" Text="Transparency" HorizontalOptions="Start" Margin="0, 0, 10, 0"/>
+            <Label VerticalTextAlignment="Center" FontAttributes="Bold" Text="min" FontSize="Micro" HorizontalOptions="Start"/>
+            <Slider Minimum="0.2" Maximum="1" Value="{Binding AlphaLevel}" HorizontalOptions="FillAndExpand" />
+            <Button Text="XXX" Command="{Binding ClickCommand}" />
+            <Label VerticalTextAlignment="Center" FontAttributes="Bold" Text="max" FontSize="Micro" HorizontalOptions="Start"/>
+        </StackLayout>-->
+</ContentPage>
+
