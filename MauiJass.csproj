@@ -72,6 +72,7 @@
 	  <None Remove="Converters\" />
 	  <None Remove="JassWeb.Shared" />
 	  <None Remove="Resources\Splash\splash.svg" />
+	  <None Remove="Libs\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Helpers\" />
@@ -79,6 +80,7 @@
 	  <Folder Include="Views\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Converters\" />
+	  <Folder Include="Libs\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="Views\MainPage.xaml">
@@ -104,11 +106,6 @@
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Reference Include="JassWeb.Shared">
-	    <HintPath>..\JassWeb\Shared\bin\Debug\net6.0\JassWeb.Shared.dll</HintPath>
-	  </Reference>
-	</ItemGroup>
-	<ItemGroup>
 	  <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\MainPage %28copier%29.xaml.cs">
 	    <DependentUpon>MainPage %28copier%29.xaml</DependentUpon>
 	    <SubType>Code</SubType>
@@ -121,5 +118,10 @@
 	    <DependentUpon>JassPage %28copier%29.xaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="JassWeb.Shared">
+	    <HintPath>Libs\JassWeb.Shared.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 </Project>
