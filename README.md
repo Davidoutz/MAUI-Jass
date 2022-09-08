@@ -9,7 +9,7 @@ This project was shared during the [Microsoft .Net MAUI beautiful UI challenge](
 ![Maui JASS screenshot](https://github.com/Davidoutz/MAUI-Jass/blob/main/Demo/screenshot_3.png)
 
 * Video
-![Maui JASS video](https://github.com/Davidoutz/MAUI-Jass/blob/main/Demo/demo.gif)
+![Maui JASS video](https://github.com/Davidoutz/MAUI-Jass/blob/main/Demo/MauiJass-Demo.mp4)
 
 ### Platforms
 - [x] iOS
