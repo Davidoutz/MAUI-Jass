@@ -9,7 +9,7 @@ This project was shared during the [Microsoft .Net MAUI beautiful UI challenge](
 ![Maui JASS screenshot](https://github.com/Davidoutz/MAUI-Jass/blob/main/Demo/screenshot_3.png)
 
 * Video
-![Maui JASS video](https://user-images.githubusercontent.com/38657416/189119464-00154dce-4b41-42d8-a50b-5ed240b6db8d.mp4)
+![Maui JASS video](https://github.com/Davidoutz/MAUI-Jass/blob/main/Demo/MauiJass-Demo.mp4)
 
 
 
